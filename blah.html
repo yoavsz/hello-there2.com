@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Google Maps Geocoding API Example</title>
+  <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY"></script>
+  <style>
+    #map{
+        height: 200px;
+        width: 200px;
+        background-color: red;
+    }
+  </style>
+</head>
+<body>
+  <div id="map"></div>
+
+  <script>
+    var geocoder = new google.maps.Geocoder();
+    var address = "1600 Pennsylvania Avenue NW, Washington, DC 20500";
+
+    geocoder.geocode({
+      address: address
+    }, function(results, status) {
+      if (status === google.maps.GeocoderStatus.OK) {
+        var latitude = results[0].geometry.location.lat();
+        var longitude = results[0].geometry.location.lng();
+
+        var map = new google.maps.Map(document.getElementById("map"), {
+          center: {lat: latitude, lng: longitude},
+          zoom: 15
+        });
+
+        var marker = new google.maps.Marker({
+          position: {lat: latitude, lng: longitude},
+          map: map
+        });
+      } else {
+        console.log("Geocode failed with status: " + status);
+      }
+    });
+  </script>
+</body>
+</html>
